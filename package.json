@@ -1,0 +1,35 @@
+{
+  "name": "whatsapp-service",
+  "version": "1.0.0",
+  "description": "WhatsApp bridge service — utilise Baileys local (../Baileys)",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "setup": "npm run build:baileys && npm install",
+    "build:baileys": "cd ../Baileys && yarn install && yarn build",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@whiskeysockets/baileys": "file:../Baileys",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pino": "^10.3.1",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.7.0",
+    "@types/qrcode": "^1.5.6",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
+  }
+}
