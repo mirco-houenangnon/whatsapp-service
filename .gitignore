@@ -1,1 +1,28 @@
-auth/ 
+# ─── Sessions WhatsApp (JAMAIS sur Git) ──────────────────────────────────────
+# Contient les clés cryptographiques de la session WhatsApp
+auth/
+
+# ─── Variables d'environnement (JAMAIS sur Git) ───────────────────────────────
+# Peut contenir BRIDGE_API_KEY et autres secrets
+.env
+.env.local
+.env.production
+.env.staging
+.env.*.local
+
+# ─── Dépendances ──────────────────────────────────────────────────────────────
+node_modules/
+
+# ─── Build TypeScript ─────────────────────────────────────────────────────────
+dist/
+
+# ─── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
