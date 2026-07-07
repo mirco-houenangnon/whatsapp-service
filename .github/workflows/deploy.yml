@@ -1,0 +1,52 @@
+name: 🚀 Deploy whatsapp-service (main)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🚀 Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: 22
+          script_stop: true
+          script: |
+            set -e
+            
+            echo "🚀 Déploiement whatsapp-service sur main..."
+            
+            # Charger nvm
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm use 20
+            
+            cd /var/www/whatsapp-service
+            
+            # Pull latest code
+            git fetch origin main
+            git reset --hard origin/main
+            
+            # Installer les dépendances (en gardant baileys npm)
+            npm install --production
+            
+            # Restart PM2 gracefully
+            pm2 restart whatsapp-service --update-env
+            pm2 save
+            
+            # Vérifier que le service tourne
+            sleep 5
+            pm2 show whatsapp-service | grep -E "status|pid|restart"
+            
+            echo "✅ whatsapp-service déployé avec succès sur port 3005 !"
